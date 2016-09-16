@@ -8,6 +8,11 @@
 
 		<link href="css/main.css" rel="stylesheet" />
 		<link href="css/pokemon.css" rel="stylesheet" />
+
+        <script src="/webjars/jquery/jquery.min.js"></script>
+        <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+        <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+        <script src="js/app.js"></script>
 	</head>
 
 	<body>
