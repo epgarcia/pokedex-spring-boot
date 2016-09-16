@@ -1,5 +1,9 @@
 package com.liferay.pokemon.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+
+@Document(indexName = "pokemon", type = "pokemon", shards = 1, replicas = 0, refreshInterval = "-1")
 public class Pokemon {
 
 	public Pokemon() {
@@ -67,6 +71,7 @@ public class Pokemon {
 		this.assetType = assetType;
 	}
 
+	@Id
 	private String id;
 	private long pokemonId;
 	private String assetType;
