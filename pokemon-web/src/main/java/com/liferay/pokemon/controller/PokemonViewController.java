@@ -1,16 +1,16 @@
 package com.liferay.pokemon.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.Map;
 
-@RestController
+@Controller
 public class PokemonViewController {
 
-	@RequestMapping("/")
+	@GetMapping("/")
 	public String index(Map<String, Object> context) {
-		return "Gotta Catch 'Em All";
+		return "index";
 	}
 
 }
