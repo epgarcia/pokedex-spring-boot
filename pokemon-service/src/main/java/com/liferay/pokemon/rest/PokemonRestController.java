@@ -1,8 +1,11 @@
 package com.liferay.pokemon.rest;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.pokemon.model.Pokemon;
 import com.liferay.pokemon.repository.PokemonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +19,9 @@ import java.util.List;
 public class PokemonRestController {
 
 	@Autowired
+	private SimpMessagingTemplate template;
+
+	@Autowired
 	private PokemonRepository repository;
 
 	@RequestMapping(value = "/add", method = RequestMethod.PUT)
@@ -27,7 +33,18 @@ public class PokemonRestController {
 
 		Pokemon pokemon = new Pokemon(pokemonId, name, type, smallImageURL);
 
-		return repository.save(pokemon);
+		pokemon = repository.save(pokemon);
+
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+
+			template.convertAndSend(
+				"/pokedex/pokemons", mapper.writeValueAsString(pokemon));
+		}
+		catch (JsonProcessingException jpe) {
+		}
+
+		return pokemon;
 	}
 
 	@RequestMapping(value = "/get/{pokemonId}", method = RequestMethod.GET)
